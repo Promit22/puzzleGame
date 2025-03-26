@@ -12,6 +12,8 @@ const images = [
     'assets/image9.png'
 ];
 
+let currentDrag: HTMLImageElement;
+
 const imgContainer = document.getElementById('imgContainer') as HTMLElement; 
 
 function shuffle(arr: string[]) { 
@@ -39,13 +41,18 @@ function renderImage() {
 renderImage();
 
 function dragStartHandler(e: DragEvent) {
-
+    const element = e.target as HTMLImageElement;
+    currentDrag = element;
+    e.dataTransfer?.setData("text", currentDrag.src);
 }
 
 function dragOverhandler(e: DragEvent) {
-
+  e.preventDefault();
 }
 
 function drophandler(e: DragEvent) {
-  
+  const dropZone = e.target as HTMLImageElement;
+  const src2 = dropZone.src;
+  dropZone.src = e.dataTransfer!.getData("text");
+  currentDrag.src = src2
 }

@@ -11,6 +11,7 @@ const images = [
     'assets/image8.png',
     'assets/image9.png'
 ];
+let currentDrag;
 const imgContainer = document.getElementById('imgContainer');
 function shuffle(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -34,8 +35,17 @@ function renderImage() {
 }
 renderImage();
 function dragStartHandler(e) {
+    var _a;
+    const element = e.target;
+    currentDrag = element;
+    (_a = e.dataTransfer) === null || _a === void 0 ? void 0 : _a.setData("text", currentDrag.src);
 }
 function dragOverhandler(e) {
+    e.preventDefault();
 }
 function drophandler(e) {
+    const dropZone = e.target;
+    const src2 = dropZone.src;
+    dropZone.src = e.dataTransfer.getData("text");
+    currentDrag.src = src2;
 }
